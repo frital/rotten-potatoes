@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: movies
-        image: frital/rotten-potatoes:v1
+        image: frital/rotten-potatoes:latest
         env:
         - name: MONGODB_DB
           value: admin
