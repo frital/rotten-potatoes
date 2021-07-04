@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: movies
+spec:
+  selector:
+    matchLabels:
+      app: movies
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: movies
+    spec:
+      containers:
+      - name: movies
+        image: frital/rotten-potatoes:v1
+        env:
+        - name: MONGODB_DB
+          value: admin
+        - name: MONGODB_HOST
+          value: mongo-service
+        - name: MONGODB_PORT
+          value: "27017"
+        - name: MONGODB_USERNAME
+          value: mongouser
+        - name: MONGODB_PASSWORD
+          value: mongopwd
+        ports:
+        - containerPort: 5000
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: movies-service
+spec:
+  selector:
+    app: movies
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 5000
+    nodePort: 30000
