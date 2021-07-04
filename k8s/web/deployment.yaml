@@ -38,7 +38,7 @@ metadata:
 spec:
   selector:
     app: movies
-  type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: 5000
