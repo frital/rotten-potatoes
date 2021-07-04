@@ -30,7 +30,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USER }}
           password: ${{ secrets.DOCKERHUB_PWD }}
-          
+
       - name: Build and push Docker images
         uses: docker/build-push-action@v2.6.1
         with:
@@ -40,3 +40,15 @@ jobs:
           tags: |
             frital/rotten-potatoes:latest
             frital/rotten-potatoes:v${{ github.run_number }}
+
+  CD:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Kubernetes set context
+        uses: Azure/k8s-set-context@v1.1
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.K8S_CONFIG }}
